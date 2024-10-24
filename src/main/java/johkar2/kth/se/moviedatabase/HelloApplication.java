@@ -1,18 +1,27 @@
 package johkar2.kth.se.moviedatabase;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
+import johkar2.kth.se.moviedatabase.model.Model;
+import johkar2.kth.se.moviedatabase.view.Controller;
+import johkar2.kth.se.moviedatabase.view.View;
 
 public class HelloApplication extends Application {
+
+    private View view;
+    private Controller controller;
+    private Model model;
+
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+    public void start(Stage stage) {
+
+        model = new Model();
+        view = new View(stage);
+        controller = new Controller(view, model);
+
+        Scene scene = new Scene(view);
+        stage.setTitle("Movie Database");
         stage.setScene(scene);
         stage.show();
     }
