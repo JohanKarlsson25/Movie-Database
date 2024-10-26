@@ -12,4 +12,12 @@ public class Controller {
         this.model = model;
         this.view.addEventHandlers(this);
     }
+
+    void handleTvSeriesSelected(){
+        System.out.println("TV");
+    }
+
+    void handleMovieSelected(){
+        System.out.println("movie");
+    }
 }

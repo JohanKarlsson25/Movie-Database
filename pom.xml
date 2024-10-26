@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>johkar2.kth.se.moviedatabase/johkar2.kth.se.moviedatabase.HelloApplication
+                            <mainClass>johkar2.kth.se.moviedatabase/johkar2.kth.se.moviedatabase.Application
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

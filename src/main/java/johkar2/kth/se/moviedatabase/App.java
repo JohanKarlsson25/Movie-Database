@@ -7,7 +7,7 @@ import johkar2.kth.se.moviedatabase.model.Model;
 import johkar2.kth.se.moviedatabase.view.Controller;
 import johkar2.kth.se.moviedatabase.view.View;
 
-public class HelloApplication extends Application {
+public class App extends Application {
 
     private View view;
     private Controller controller;
@@ -23,6 +23,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(view);
         stage.setTitle("Movie Database");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
