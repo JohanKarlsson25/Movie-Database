@@ -28,4 +28,8 @@ public class Controller {
             System.out.println("tvseries hover");
         }
     }
+
+    void add(){
+
+    }
 }

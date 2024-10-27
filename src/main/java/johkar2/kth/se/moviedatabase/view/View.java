@@ -3,6 +3,7 @@ package johkar2.kth.se.moviedatabase.view;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -45,6 +46,7 @@ public class View extends Pane {
 
     void movieView(){
         this.getChildren().clear();
+        this.applicationState = ApplicationState.MOVIE_SUBMENU;
     }
 
     private void initView(){
