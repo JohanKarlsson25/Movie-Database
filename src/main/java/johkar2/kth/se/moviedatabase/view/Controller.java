@@ -18,6 +18,14 @@ public class Controller {
     }
 
     void handleMovieSelected(){
-        System.out.println("movie");
+        view.movieView();
+    }
+
+    void handleHover(Object source){
+        if (source.equals(view.getMovieImageview())){
+            System.out.println("Movie hover");
+        } else if (source.equals(view.getTv_seriesImageview())){
+            System.out.println("tvseries hover");
+        }
     }
 }
