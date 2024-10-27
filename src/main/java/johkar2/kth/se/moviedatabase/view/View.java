@@ -1,5 +1,7 @@
 package johkar2.kth.se.moviedatabase.view;
 
+import javafx.animation.Animation;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
@@ -8,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class View extends Pane {
 
@@ -23,25 +26,26 @@ public class View extends Pane {
 
     void mainMenuView(){
         this.getChildren().clear();
-        this.getChildren().add(imageView);
         imageView.setImage(mainMenuImage);
-        Thread background = new Thread(new MainMenuBackground(this));
-        background.start();
-    }
-
-    void setViewPort(int yPixelValue){
-        imageView.setViewport(new Rectangle2D(0,yPixelValue,1280,720));
+        this.getChildren().add(imageView);
+        TranslateTransition transition = new TranslateTransition();
+        transition.setDuration(Duration.seconds(30));
+        transition.setToY(-3300);
+        transition.setAutoReverse(true);
+        transition.setCycleCount(Animation.INDEFINITE);
+        transition.setNode(imageView);
+        transition.play();
     }
 
     private void initView(){
 
-        this.setPrefSize(1280,720);
+        this.setPrefSize(1500,700);
         tv_seriesButton = new Button();
         movieButton = new Button();
         imageView = new ImageView();
 
         this.getChildren().addAll(tv_seriesButton, movieButton, imageView);
-        mainMenuImage = new Image("download.png");
+        mainMenuImage = new Image("backgroundImage.png");
 
         mainMenuView();
     }
