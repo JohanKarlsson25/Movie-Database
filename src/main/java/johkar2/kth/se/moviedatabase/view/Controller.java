@@ -29,7 +29,10 @@ public class Controller {
         }
     }
 
-    void add(){
-
+    void handleAdd(ApplicationState applicationState){
+        switch (applicationState){
+            case MOVIE_SUBMENU : model.addMovie(); break;
+            case TV_SERIESMENU : model.addTv_Series(); break;
+        }
     }
 }
