@@ -18,7 +18,7 @@ public class Model {
 
     }
 
-    //TODO maybe should be a "MEDIAHANDLER" and have facade functions here and private there
+    //TODO maybe should be a "MEDIAHANDLER" and have facade functions here and private there???
     public void addMovie(String title){
         if (!isTitleUnique(title)) throw new IllegalArgumentException("Movie Title already exists");
     }

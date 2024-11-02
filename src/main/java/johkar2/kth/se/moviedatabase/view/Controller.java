@@ -22,17 +22,21 @@ public class Controller {
     }
 
     void handleHover(Object source){
-        if (source.equals(view.getMovieImageview())){
+        if (source.equals(view.getMovieButtonImageview())){
             System.out.println("Movie hover");
-        } else if (source.equals(view.getTv_seriesImageview())){
+        } else if (source.equals(view.getTv_seriesButton())){
             System.out.println("tvseries hover");
         }
     }
 
     void handleAdd(ApplicationState applicationState){
         switch (applicationState){
-            case MOVIE_SUBMENU : model.addMovie(); break;
+            //case MOVIE_SUBMENU : model.addMovie(); break;
             case TV_SERIESMENU : model.addTv_Series(); break;
         }
+    }
+
+    void handleExitRequest(){
+        System.exit(0);
     }
 }

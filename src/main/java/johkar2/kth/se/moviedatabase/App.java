@@ -3,6 +3,7 @@ package johkar2.kth.se.moviedatabase;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import johkar2.kth.se.moviedatabase.model.Model;
 import johkar2.kth.se.moviedatabase.view.Controller;
 import johkar2.kth.se.moviedatabase.view.View;
@@ -16,6 +17,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
 
+        stage.initStyle(StageStyle.UNDECORATED);
         model = new Model();
         view = new View(stage);
         controller = new Controller(view, model);

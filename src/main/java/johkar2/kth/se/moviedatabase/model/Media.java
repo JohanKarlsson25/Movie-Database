@@ -1,6 +1,8 @@
 package johkar2.kth.se.moviedatabase.model;
 
-public abstract class Media {
+import java.io.Serializable;
+
+public abstract class Media implements Serializable {
 
     private String title;
     private String description;
