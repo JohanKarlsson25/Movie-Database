@@ -1,5 +1,6 @@
 package johkar2.kth.se.moviedatabase.view;
 
+import javafx.scene.Cursor;
 import johkar2.kth.se.moviedatabase.model.Model;
 
 public class Controller {
@@ -22,11 +23,13 @@ public class Controller {
     }
 
     void handleHover(Object source){
-        if (source.equals(view.getMovieButtonImageview())){
+        if (source.equals(view.getMovieButton())){
             System.out.println("Movie hover");
         } else if (source.equals(view.getTv_seriesButton())){
             System.out.println("tvseries hover");
-        }
+        } //else if (source.equals(view.getExitButton())){
+            //view.setCursor(Cursor.HAND);
+        //}
     }
 
     void handleAdd(ApplicationState applicationState){
