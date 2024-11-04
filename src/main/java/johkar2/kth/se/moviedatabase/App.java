@@ -26,7 +26,7 @@ public class App extends Application {
         stage.setTitle("Movie Database");
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setFullScreen(true);
+        stage.setFullScreen(false);
         stage.show();
     }
 

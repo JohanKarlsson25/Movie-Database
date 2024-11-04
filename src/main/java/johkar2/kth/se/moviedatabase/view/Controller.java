@@ -32,6 +32,10 @@ public class Controller {
         //}
     }
 
+    void handleMyLibrary(){
+        view.showMyLibrary(model.getTitles());
+    }
+
     void handleAdd(ApplicationState applicationState){
         switch (applicationState){
             //case MOVIE_SUBMENU : model.addMovie(); break;

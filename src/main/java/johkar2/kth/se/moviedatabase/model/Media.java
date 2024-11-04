@@ -6,9 +6,9 @@ public abstract class Media implements Serializable {
 
     private String title;
     private String description;
-    private int rating;
+    private double rating;
 
-    protected Media(String title, String description, int rating){
+    protected Media(String title, String description, double rating){
         this.title = title;
         this.description = description;
         this.rating = rating;
@@ -22,7 +22,7 @@ public abstract class Media implements Serializable {
         return description;
     }
 
-    public int getRating(){
+    public double getRating(){
         return rating;
     }
 

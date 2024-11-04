@@ -1,6 +1,7 @@
 package johkar2.kth.se.moviedatabase.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Model {
 
@@ -8,6 +9,7 @@ public class Model {
 
     public Model(){
         allEntries = new ArrayList<>();
+        allEntries.add(new Movie("Django Unchained", " ", 8.5));
     }
 
     public void readFromFile(){
@@ -25,6 +27,18 @@ public class Model {
 
     public void addTv_Series(){
 
+    }
+
+    public List<String> getTitles(){
+        ArrayList<String> copy = new ArrayList<>();
+        for (Media m : allEntries){
+            copy.add(m.getTitle());
+        }
+        return copy;
+    }
+
+    public List<Media> getAllEntries(){
+        return new ArrayList<>(allEntries);
     }
 
     public boolean isTitleUnique(String title){
