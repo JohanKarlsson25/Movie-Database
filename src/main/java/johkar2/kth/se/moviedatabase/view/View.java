@@ -21,7 +21,7 @@ public class View extends Pane {
 
     //GUI Components
     private ImageView backgroundIV, movieButtonIV, tv_seriesButtonIV, exitButtonIV, menuHamburgerButtonIV;
-    private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow;
+    private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, centerStage;
     private Image mainMenuImage, mainMenuOutlineIcon, exitButtonImage, menuHamburgerButtonImage;
     private Background smallIconBackground;
 
@@ -45,8 +45,10 @@ public class View extends Pane {
         this.getChildren().clear();
         this.applicationState = ApplicationState.MOVIE_SUBMENU;
         this.setStyle("-fx-background-color: #05031a;");
-        this.getChildren().addAll(exitButton,menuHamburgerButton,previewWindow);
+        this.getChildren().addAll(exitButton,menuHamburgerButton,previewWindow,centerStage);
         exitButton.relocate(1400,25);
+        centerStage.relocate(500,100);
+        centerStage.setPrefSize(500,700);
         menuHamburgerButton.relocate(100,100);
         previewWindow.relocate(1100,100);
         previewWindow.setPrefSize(350,700);
@@ -159,6 +161,7 @@ public class View extends Pane {
         tv_seriesButton = new Pane();
         menuHamburgerButton = new Pane();
         previewWindow = new Pane();
+        centerStage = new Pane();
         exitButton.getChildren().add(exitButtonIV);
         movieButton.getChildren().add(movieButtonIV);
         tv_seriesButton.getChildren().add(tv_seriesButtonIV);
@@ -170,6 +173,7 @@ public class View extends Pane {
         menuHamburgerButtonIV.setImage(menuHamburgerButtonImage);
         smallIconBackground = new Background(new BackgroundFill(Color.web("0x0f094d"),new CornerRadii(10),new Insets(-5)));
         previewWindow.setBorder(new Border(new BorderStroke(Color.web("0xF4F4F4"),BorderStrokeStyle.SOLID,new CornerRadii(10),BorderWidths.DEFAULT)));
+        centerStage.setBorder(new Border(new BorderStroke(Color.web("0xF4F4F4"),BorderStrokeStyle.SOLID,new CornerRadii(10),BorderWidths.DEFAULT)));
 
         mainMenuView();
     }
