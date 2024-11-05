@@ -20,6 +20,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class View extends Pane {
@@ -30,9 +32,12 @@ public class View extends Pane {
     //GUI Components
     private ImageView backgroundIV, movieButtonIV, tv_seriesButtonIV, exitButtonIV, menuHamburgerButtonIV, myLibraryButtonIV;
     private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, centerStage, myLibraryButton;
+    private ScrollPane myLibrary;
     private Image mainMenuImage, mainMenuOutlineIcon, exitButtonImage, menuHamburgerButtonImage, myLibraryButtonImage;
     private Background smallIconBackground;
     private Border border;
+    private List<MyLibraryLine> myLibraryList;
+
     private Text text;
 
     public View(Stage stage){
@@ -50,14 +55,10 @@ public class View extends Pane {
         tv_seriesButton.relocate(windowWidth-400-mainMenuOutlineIcon.getWidth(),500);
     }
 
-    void showMyLibrary(List<String> titles){
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setPrefSize(100,100);
-        scrollPane.setContent(new Rectangle(200,200,200,200));
-        //GenerateMyLibraryList(scrollPane); //Bara göra en gång, ändra index nummer om ändra sorting
+    void showMyLibrary(){
+
         centerStage.getChildren().clear();
-        centerStage.getChildren().add(scrollPane);
+        centerStage.getChildren().add(myLibrary);
     }
 
     void movieView(){
@@ -97,7 +98,11 @@ public class View extends Pane {
         exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                controller.handleExitRequest();
+                try {
+                    controller.handleExitRequest();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         exitButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -173,6 +178,12 @@ public class View extends Pane {
         return tv_seriesButtonIV;
     }
 
+    void generateMyLibraryList(){
+        //for (int i = 0; i < numberOfEntries; i++){
+
+        //}
+    }
+
     private void initView(){
 
         this.setPrefSize(windowWidth,windowHeight);
@@ -196,6 +207,8 @@ public class View extends Pane {
         previewWindow = new Pane();
         centerStage = new Pane();
         myLibraryButton = new Pane();
+        myLibrary = new ScrollPane();
+        myLibrary.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         exitButton.getChildren().add(exitButtonIV);
         movieButton.getChildren().add(movieButtonIV);
         tv_seriesButton.getChildren().add(tv_seriesButtonIV);
@@ -224,6 +237,8 @@ public class View extends Pane {
         border = new Border(new BorderStroke(Color.web("0xF4F4F4"),BorderStrokeStyle.SOLID,new CornerRadii(10),BorderWidths.DEFAULT));
         previewWindow.setBorder(border);
         centerStage.setBorder(border);
+
+        myLibraryList = new ArrayList<>();
 
         mainMenuView();
     }

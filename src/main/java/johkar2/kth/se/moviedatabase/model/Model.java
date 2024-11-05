@@ -1,5 +1,6 @@
 package johkar2.kth.se.moviedatabase.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,12 @@ public class Model {
         allEntries.add(new Movie("Django Unchained", " ", 8.5));
     }
 
-    public void readFromFile(){
-
+    public void readFromFile() throws Exception {
+        allEntries.addAll(FileIO.readMediaFromFile());
     }
 
-    public void writeToFile(){
-
+    public void writeToFile() throws IOException {
+        FileIO.writeMediaToFile(allEntries);
     }
 
     //TODO maybe should be a "MEDIAHANDLER" and have facade functions here and private there???

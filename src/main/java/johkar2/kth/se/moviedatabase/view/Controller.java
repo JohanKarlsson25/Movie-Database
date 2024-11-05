@@ -3,6 +3,8 @@ package johkar2.kth.se.moviedatabase.view;
 import javafx.scene.Cursor;
 import johkar2.kth.se.moviedatabase.model.Model;
 
+import java.io.IOException;
+
 public class Controller {
 
     private View view;
@@ -33,7 +35,8 @@ public class Controller {
     }
 
     void handleMyLibrary(){
-        view.showMyLibrary(model.getTitles());
+        view.generateMyLibraryList();
+        view.showMyLibrary();
     }
 
     void handleAdd(ApplicationState applicationState){
@@ -43,7 +46,8 @@ public class Controller {
         }
     }
 
-    void handleExitRequest(){
+    void handleExitRequest() throws IOException {
+        model.writeToFile();
         System.exit(0);
     }
 }

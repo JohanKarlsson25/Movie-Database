@@ -6,11 +6,11 @@ import java.util.List;
 
 public class FileIO {
 
-    static void writeMediaToFile(File file, List<Media> media) throws IOException {
-        if (file == null) throw new IllegalArgumentException();
+    static void writeMediaToFile(List<Media> media) throws IOException {
         ObjectOutputStream oos = null;
+        File file = new File("C:\\Movie Database\\src\\main\\resources\\media.ser");
         try {
-            FileOutputStream fout = new FileOutputStream("mediaList.ser");
+            FileOutputStream fout = new FileOutputStream(file);
             oos = new ObjectOutputStream(fout);
             oos.writeObject(media);
         }
@@ -20,7 +20,7 @@ public class FileIO {
         }
     }
 
-    static List<Media> readMediaFromFile(File file) throws Exception {
+    static List<Media> readMediaFromFile() throws Exception {
         ObjectInputStream ois = null;
         ArrayList<Media> list = null;
         try {
