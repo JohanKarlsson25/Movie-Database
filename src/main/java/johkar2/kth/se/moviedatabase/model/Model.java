@@ -1,5 +1,7 @@
 package johkar2.kth.se.moviedatabase.model;
 
+import johkar2.kth.se.moviedatabase.view.ApplicationState;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +12,14 @@ public class Model {
 
     public Model(){
         allEntries = new ArrayList<>();
-        allEntries.add(new Movie("Django Unchained", " ", 8.5));
+        allEntries.add(new Movie("Django Unchained", " ", 8.5,2012,2,45));
     }
 
     public void readFromFile() throws Exception {
         allEntries.addAll(FileIO.readMediaFromFile());
     }
 
-    public void writeToFile() throws IOException {
+    public void writeToFile() throws Exception {
         FileIO.writeMediaToFile(allEntries);
     }
 
@@ -40,6 +42,22 @@ public class Model {
 
     public List<Media> getAllEntries(){
         return new ArrayList<>(allEntries);
+    }
+
+    public List<Media> getAllMovies(){
+        ArrayList<Media> copy = new ArrayList<>();
+        for (Media m : allEntries){
+            if (m instanceof Movie) copy.add(m);
+        }
+        return copy;
+    }
+
+    public List<Media> getAllTv_Series(){
+        ArrayList<Media> copy = new ArrayList<>();
+        for (Media m : allEntries){
+            if (m instanceof Tv_Series) copy.add(m);
+        }
+        return copy;
     }
 
     public boolean isTitleUnique(String title){

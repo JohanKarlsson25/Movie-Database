@@ -6,17 +6,16 @@ import java.util.List;
 
 public class FileIO {
 
-    static void writeMediaToFile(List<Media> media) throws IOException {
+    static void writeMediaToFile(List<Media> media) throws Exception {
         ObjectOutputStream oos = null;
-        File file = new File("C:\\Movie Database\\src\\main\\resources\\media.ser");
+        File file = new File("D:\\Movie-Database\\src\\main\\resources\\media.ser");
         try {
             FileOutputStream fout = new FileOutputStream(file);
             oos = new ObjectOutputStream(fout);
             oos.writeObject(media);
         }
         finally {
-            assert oos != null;
-            oos.close();
+            if (oos != null) oos.close();
         }
     }
 
@@ -28,8 +27,7 @@ public class FileIO {
             ois = new ObjectInputStream(fin);
             list = (ArrayList<Media>) ois.readObject();
         } finally {
-            assert ois != null;
-            ois.close();
+            if (ois != null) ois.close();
         }
         return list;
     }

@@ -34,8 +34,8 @@ public class Controller {
         //}
     }
 
-    void handleMyLibrary(){
-        view.generateMyLibraryList();
+    void handleMyLibrary(ApplicationState applicationState){
+        view.generateMyLibraryList((applicationState == ApplicationState.MOVIE_SUBMENU) ? model.getAllMovies() : model.getAllTv_Series());
         view.showMyLibrary();
     }
 
@@ -46,7 +46,7 @@ public class Controller {
         }
     }
 
-    void handleExitRequest() throws IOException {
+    void handleExitRequest() throws Exception {
         model.writeToFile();
         System.exit(0);
     }

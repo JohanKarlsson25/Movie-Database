@@ -19,10 +19,12 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import johkar2.kth.se.moviedatabase.model.Media;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.CheckedInputStream;
 
 public class View extends Pane {
 
@@ -31,8 +33,8 @@ public class View extends Pane {
 
     //GUI Components
     private ImageView backgroundIV, movieButtonIV, tv_seriesButtonIV, exitButtonIV, menuHamburgerButtonIV, myLibraryButtonIV;
-    private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, centerStage, myLibraryButton;
-    private ScrollPane myLibrary;
+    private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, myLibrary, myLibraryButton;
+    private ScrollPane centerStage;
     private Image mainMenuImage, mainMenuOutlineIcon, exitButtonImage, menuHamburgerButtonImage, myLibraryButtonImage;
     private Background smallIconBackground;
     private Border border;
@@ -57,8 +59,8 @@ public class View extends Pane {
 
     void showMyLibrary(){
 
-        centerStage.getChildren().clear();
-        centerStage.getChildren().add(myLibrary);
+        centerStage.setContent(null);
+        centerStage.setContent(myLibrary);
     }
 
     void movieView(){
@@ -100,8 +102,12 @@ public class View extends Pane {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     controller.handleExitRequest();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    try {//WTFFFF
+                        throw new Exception(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
@@ -156,7 +162,7 @@ public class View extends Pane {
         myLibraryButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                controller.handleMyLibrary();
+                controller.handleMyLibrary(applicationState);
             }
         });
     }
@@ -178,10 +184,15 @@ public class View extends Pane {
         return tv_seriesButtonIV;
     }
 
-    void generateMyLibraryList(){
-        //for (int i = 0; i < numberOfEntries; i++){
-
-        //}
+    void generateMyLibraryList(List<Media> listOfSpecificMedia){
+        int yFactor = 0;
+        for (Media media : listOfSpecificMedia) {
+            MyLibraryLine line = new MyLibraryLine(media.getTitle(), media.getYear(),
+                    media.getHours(), media.getMinutes(), media.getRating());
+            myLibrary.getChildren().add(line);
+            line.setTranslateY(yFactor);
+            yFactor += 40;
+        }
     }
 
     private void initView(){
@@ -205,10 +216,10 @@ public class View extends Pane {
         tv_seriesButton = new Pane();
         menuHamburgerButton = new Pane();
         previewWindow = new Pane();
-        centerStage = new Pane();
+        myLibrary = new Pane();
         myLibraryButton = new Pane();
-        myLibrary = new ScrollPane();
-        myLibrary.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        centerStage = new ScrollPane();
+        centerStage.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         exitButton.getChildren().add(exitButtonIV);
         movieButton.getChildren().add(movieButtonIV);
         tv_seriesButton.getChildren().add(tv_seriesButtonIV);

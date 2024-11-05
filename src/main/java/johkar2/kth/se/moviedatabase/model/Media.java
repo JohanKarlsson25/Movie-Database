@@ -7,11 +7,15 @@ public abstract class Media implements Serializable {
     private String title;
     private String description;
     private double rating;
+    private int year, hours, minutes;
 
-    protected Media(String title, String description, double rating){
+    protected Media(String title, String description, double rating, int year, int hours, int minutes){
         this.title = title;
         this.description = description;
         this.rating = rating;
+        this.year = year;
+        this.hours = hours;
+        this.minutes = minutes;
     }
 
     public String getTitle(){
@@ -24,6 +28,18 @@ public abstract class Media implements Serializable {
 
     public double getRating(){
         return rating;
+    }
+
+    public int getYear(){
+        return year;
+    }
+
+    public int getHours(){
+        return hours;
+    }
+
+    public int getMinutes(){
+        return minutes;
     }
 
     public void setTitle(String title){
