@@ -12,19 +12,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import johkar2.kth.se.moviedatabase.model.Media;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.CheckedInputStream;
 
 public class View extends Pane {
 
@@ -33,8 +29,8 @@ public class View extends Pane {
 
     //GUI Components
     private ImageView backgroundIV, movieButtonIV, tv_seriesButtonIV, exitButtonIV, menuHamburgerButtonIV, myLibraryButtonIV;
-    private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, myLibrary, myLibraryButton;
-    private ScrollPane centerStage;
+    private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, myLibrary, myLibraryButton, centerStage;
+    private ScrollPane myLibraryScrollPane;
     private Image mainMenuImage, mainMenuOutlineIcon, exitButtonImage, menuHamburgerButtonImage, myLibraryButtonImage;
     private Background smallIconBackground;
     private Border border;
@@ -59,8 +55,9 @@ public class View extends Pane {
 
     void showMyLibrary(){
 
-        centerStage.setContent(null);
-        centerStage.setContent(myLibrary);
+        centerStage.getChildren().clear();
+        myLibraryScrollPane.setContent(myLibrary);
+        centerStage.getChildren().add(myLibraryScrollPane);
     }
 
     void movieView(){
@@ -69,6 +66,7 @@ public class View extends Pane {
         this.applicationState = ApplicationState.MOVIE_SUBMENU;
         this.setStyle("-fx-background-color: #05031a;");
         this.getChildren().addAll(exitButton,menuHamburgerButton,previewWindow,centerStage,myLibraryButton);
+
     }
 
     void addEventHandlers(Controller controller){
@@ -191,8 +189,9 @@ public class View extends Pane {
                     media.getHours(), media.getMinutes(), media.getRating());
             myLibrary.getChildren().add(line);
             line.setTranslateY(yFactor);
-            yFactor += 40;
+            yFactor += 39;
         }
+        myLibrary.setBorder(border);
     }
 
     private void initView(){
@@ -218,8 +217,9 @@ public class View extends Pane {
         previewWindow = new Pane();
         myLibrary = new Pane();
         myLibraryButton = new Pane();
-        centerStage = new ScrollPane();
-        centerStage.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        centerStage = new Pane();
+        myLibraryScrollPane = new ScrollPane();
+        myLibraryScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         exitButton.getChildren().add(exitButtonIV);
         movieButton.getChildren().add(movieButtonIV);
         tv_seriesButton.getChildren().add(tv_seriesButtonIV);
@@ -239,6 +239,7 @@ public class View extends Pane {
         exitButton.relocate(1400,25);
         centerStage.relocate(500,100);
         centerStage.setPrefSize(500,700);
+        myLibraryScrollPane.setPrefSize(500,700);
         menuHamburgerButton.relocate(100,100);
         previewWindow.relocate(1100,100);
         previewWindow.setPrefSize(350,700);

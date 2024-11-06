@@ -13,6 +13,9 @@ public class Model {
     public Model(){
         allEntries = new ArrayList<>();
         allEntries.add(new Movie("Django Unchained", " ", 8.5,2012,2,45));
+        allEntries.add(new Movie("The Dark Knight", " ", 8.9,2008,2,12));
+        allEntries.add(new Movie("Starwas", " ", 8.5,2012,2,45));
+        allEntries.add(new Movie("gerwgwgr", " ", 8.5,206,2,45));
     }
 
     public void readFromFile() throws Exception {
