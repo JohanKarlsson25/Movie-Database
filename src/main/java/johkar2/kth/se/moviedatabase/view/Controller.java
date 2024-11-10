@@ -2,7 +2,6 @@ package johkar2.kth.se.moviedatabase.view;
 
 import javafx.scene.Cursor;
 import johkar2.kth.se.moviedatabase.model.Model;
-
 import java.io.IOException;
 
 public class Controller {
@@ -46,8 +45,12 @@ public class Controller {
         }
     }
 
-    void handleExitRequest() throws Exception {
-        model.writeToFile();
+    void handleExitRequest() {
+        try{
+            model.writeToFile();
+        } catch (Exception e){
+            //view.alert();
+        }
         System.exit(0);
     }
 }

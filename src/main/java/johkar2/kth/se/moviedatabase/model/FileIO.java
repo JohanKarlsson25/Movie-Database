@@ -8,7 +8,7 @@ public class FileIO {
 
     static void writeMediaToFile(List<Media> media) throws Exception {
         ObjectOutputStream oos = null;
-        File file = new File("D:\\Movie-Database\\src\\main\\resources\\media.ser");
+        File file = new File("C:\\Movie Database\\src\\main\\resources\\media.ser"); //D:\Movie-Database\src\main\resources\media.ser
         try {
             FileOutputStream fout = new FileOutputStream(file);
             oos = new ObjectOutputStream(fout);
@@ -21,7 +21,7 @@ public class FileIO {
 
     static List<Media> readMediaFromFile() throws Exception {
         ObjectInputStream ois = null;
-        ArrayList<Media> list = null;
+        ArrayList<Media> list;
         try {
             FileInputStream fin = new FileInputStream("mediaList.ser");
             ois = new ObjectInputStream(fin);

@@ -28,15 +28,17 @@ public class View extends Pane {
     private ApplicationState applicationState;
 
     //GUI Components
-    private ImageView backgroundIV, movieButtonIV, tv_seriesButtonIV, exitButtonIV, menuHamburgerButtonIV, myLibraryButtonIV;
-    private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, myLibrary, myLibraryButton, centerStage;
+    private ImageView backgroundIV, movieButtonIV, tv_seriesButtonIV, exitButtonIV, menuHamburgerButtonIV,
+            myLibraryButtonIV, watchListButtonIV, hallOfFameButtonIV;
+    private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, myLibrary,
+            myLibraryButton, centerStage, watchListButton, hallOfFameButton;
     private ScrollPane myLibraryScrollPane;
-    private Image mainMenuImage, mainMenuOutlineIcon, exitButtonImage, menuHamburgerButtonImage, myLibraryButtonImage;
+    private Image mainMenuImage, mainMenuOutlineIcon, exitButtonImage, menuHamburgerButtonImage, myLibraryButtonImage,
+            watchListButtonImage, hallOfFameButtonImage;
     private Background smallIconBackground;
     private Border border;
     private List<MyLibraryLine> myLibraryList;
-
-    private Text text;
+    private Text myLibraryText, watchListText, hallOfFameText;
 
     public View(Stage stage){
         initView();
@@ -65,8 +67,8 @@ public class View extends Pane {
         this.getChildren().clear();
         this.applicationState = ApplicationState.MOVIE_SUBMENU;
         this.setStyle("-fx-background-color: #05031a;");
-        this.getChildren().addAll(exitButton,menuHamburgerButton,previewWindow,centerStage,myLibraryButton);
-
+        this.getChildren().addAll(exitButton,menuHamburgerButton,previewWindow,centerStage,
+                myLibraryButton,watchListButton,hallOfFameButton);
     }
 
     void addEventHandlers(Controller controller){
@@ -98,15 +100,7 @@ public class View extends Pane {
         exitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                try {
-                    controller.handleExitRequest();
-                } catch (Exception e) {
-                    try {//WTFFFF
-                        throw new Exception(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
+                controller.handleExitRequest();
             }
         });
         exitButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -163,6 +157,46 @@ public class View extends Pane {
                 controller.handleMyLibrary(applicationState);
             }
         });
+        watchListButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCursor(Cursor.HAND);
+                watchListButton.setBackground(smallIconBackground);
+            }
+        });
+        watchListButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCursor(Cursor.DEFAULT);
+                watchListButton.setBackground(null);
+            }
+        });
+        watchListButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                //controller.handleWatchlist();
+            }
+        });
+        hallOfFameButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCursor(Cursor.HAND);
+                hallOfFameButton.setBackground(smallIconBackground);
+            }
+        });
+        hallOfFameButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCursor(Cursor.DEFAULT);
+                hallOfFameButton.setBackground(null);
+            }
+        });
+        hallOfFameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                //controller.handleHallOfFame();
+            }
+        });
     }
 
     private void startTransition(int animationDuration, int animationYTransition, boolean transitionAutoReverse, int transitionCycleCount, Node node){
@@ -204,12 +238,16 @@ public class View extends Pane {
         exitButtonImage = new Image("cross.png");
         menuHamburgerButtonImage = new Image("menu-burger.png");
         myLibraryButtonImage = new Image("myLibraryIcon.png");
+        watchListButtonImage = new Image("to-do.png");
+        hallOfFameButtonImage = new Image("crown.png");
         movieButtonIV = new ImageView();
         tv_seriesButtonIV = new ImageView();
         backgroundIV = new ImageView();
         exitButtonIV = new ImageView();
         menuHamburgerButtonIV = new ImageView();
         myLibraryButtonIV = new ImageView();
+        watchListButtonIV = new ImageView();
+        hallOfFameButtonIV = new ImageView();
         exitButton = new Pane();
         movieButton = new Pane();
         tv_seriesButton = new Pane();
@@ -218,6 +256,8 @@ public class View extends Pane {
         myLibrary = new Pane();
         myLibraryButton = new Pane();
         centerStage = new Pane();
+        watchListButton = new Pane();
+        hallOfFameButton = new Pane();
         myLibraryScrollPane = new ScrollPane();
         myLibraryScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         exitButton.getChildren().add(exitButtonIV);
@@ -225,17 +265,31 @@ public class View extends Pane {
         tv_seriesButton.getChildren().add(tv_seriesButtonIV);
         menuHamburgerButton.getChildren().add(menuHamburgerButtonIV);
         myLibraryButton.getChildren().add(myLibraryButtonIV);
+        watchListButton.getChildren().add(watchListButtonIV);      //Tänk på TODO Varför har jag olika imageviews? måste gå att göra annat
+        hallOfFameButton.getChildren().add(hallOfFameButtonIV);
         movieButtonIV.setImage(mainMenuOutlineIcon);
         tv_seriesButtonIV.setImage(mainMenuOutlineIcon);
         backgroundIV.setImage(mainMenuImage);
         exitButtonIV.setImage(exitButtonImage);
         menuHamburgerButtonIV.setImage(menuHamburgerButtonImage);
         myLibraryButtonIV.setImage(myLibraryButtonImage);
-        text = new Text("My Library");
-        text.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
-        text.setFill(Color.WHITE);
-        myLibraryButton.getChildren().add(text);
-        text.relocate(50,0);
+        watchListButtonIV.setImage(watchListButtonImage);
+        hallOfFameButtonIV.setImage(hallOfFameButtonImage);
+        myLibraryText = new Text("My Library");
+        watchListText = new Text("Watchlist");
+        hallOfFameText = new Text("Hall of Fame");
+        myLibraryText.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
+        myLibraryText.setFill(Color.WHITE);
+        myLibraryButton.getChildren().add(myLibraryText);
+        myLibraryText.relocate(50,0);
+        watchListText.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
+        watchListText.setFill(Color.WHITE);
+        watchListButton.getChildren().add(watchListText);
+        watchListText.relocate(50,0);
+        hallOfFameText.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
+        hallOfFameText.setFill(Color.WHITE);
+        hallOfFameButton.getChildren().add(hallOfFameText);
+        hallOfFameText.relocate(50,0);
         exitButton.relocate(1400,25);
         centerStage.relocate(500,100);
         centerStage.setPrefSize(500,700);
@@ -244,6 +298,8 @@ public class View extends Pane {
         previewWindow.relocate(1100,100);
         previewWindow.setPrefSize(350,700);
         myLibraryButton.relocate(100,175);
+        watchListButton.relocate(100,250);
+        hallOfFameButton.relocate(100,325);
 
         smallIconBackground = new Background(new BackgroundFill(Color.web("0x0f094d"),new CornerRadii(10),new Insets(-5)));
         border = new Border(new BorderStroke(Color.web("0xF4F4F4"),BorderStrokeStyle.SOLID,new CornerRadii(10),BorderWidths.DEFAULT));
