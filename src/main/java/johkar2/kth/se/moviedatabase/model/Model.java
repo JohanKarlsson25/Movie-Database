@@ -1,8 +1,5 @@
 package johkar2.kth.se.moviedatabase.model;
 
-import johkar2.kth.se.moviedatabase.view.ApplicationState;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

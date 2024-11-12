@@ -31,6 +31,10 @@ public class MyLibraryLine extends Pane {
         yearText = new Text(String.valueOf(year));
         timeText = new Text(hours + ":" + minutes);
         ratingText = new Text(String.valueOf(rating));
+        titleText.setFill(Color.WHITE);
+        yearText.setFill(Color.WHITE);
+        timeText.setFill(Color.WHITE);
+        ratingText.setFill(Color.WHITE);
 
         this.getChildren().addAll(titleText,yearText,timeText,ratingText);
         titleText.relocate(50,10);

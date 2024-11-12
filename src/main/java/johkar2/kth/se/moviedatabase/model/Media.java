@@ -1,5 +1,7 @@
 package johkar2.kth.se.moviedatabase.model;
 
+import javafx.scene.image.Image;
+
 import java.io.Serializable;
 
 public abstract class Media implements Serializable {
@@ -8,6 +10,7 @@ public abstract class Media implements Serializable {
     private String description;
     private double rating;
     private int year, hours, minutes;
+    private Image image;
 
     protected Media(String title, String description, double rating, int year, int hours, int minutes){
         this.title = title;
@@ -53,5 +56,9 @@ public abstract class Media implements Serializable {
 
     public void setRating(){
 
+    }
+
+    public void setImage(Image image){
+        this.image = image;
     }
 }

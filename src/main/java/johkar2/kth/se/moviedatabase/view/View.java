@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -29,12 +30,12 @@ public class View extends Pane {
 
     //GUI Components
     private ImageView backgroundIV, movieButtonIV, tv_seriesButtonIV, exitButtonIV, menuHamburgerButtonIV,
-            myLibraryButtonIV, watchListButtonIV, hallOfFameButtonIV, mountRushmoreButtonIV, homeButtonIV;
+            myLibraryButtonIV, watchListButtonIV, hallOfFameButtonIV, mountRushmoreButtonIV, homeButtonIV, mostRecentWatchIV;
     private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, myLibrary,
             myLibraryButton, centerStage, watchListButton, hallOfFameButton, mountRushmoreButton, homeButton;
     private ScrollPane myLibraryScrollPane;
     private Image mainMenuImage, mainMenuOutlineIcon, exitButtonImage, menuHamburgerButtonImage, myLibraryButtonImage,
-            watchListButtonImage, hallOfFameButtonImage, mountRushmoreButtonImage, homeButtonImage;
+            watchListButtonImage, hallOfFameButtonImage, mountRushmoreButtonImage, homeButtonImage, mostRecentWatchImage;
     private Background smallIconBackground;
     private Border border;
     private List<MyLibraryLine> myLibraryList;
@@ -49,7 +50,7 @@ public class View extends Pane {
 
         this.getChildren().clear();
         this.getChildren().add(backgroundIV);
-        startTransition(30,-3000,true,Animation.INDEFINITE,backgroundIV);
+        startTransition(30000,-3000,true,Animation.INDEFINITE,backgroundIV);
         this.getChildren().addAll(movieButton,tv_seriesButton);
         movieButton.relocate(400,500);
         tv_seriesButton.relocate(windowWidth-400-mainMenuOutlineIcon.getWidth(),500);
@@ -62,13 +63,22 @@ public class View extends Pane {
         centerStage.getChildren().add(myLibraryScrollPane);
     }
 
+    void showSubMenuButtons(){
+        this.getChildren().addAll(myLibraryButton,watchListButton,hallOfFameButton,mountRushmoreButton);
+        startTransition(500,75,false,1,myLibraryButton);
+        startTransition(500,150,false,1,watchListButton);
+        startTransition(500,225,false,1,hallOfFameButton);
+        startTransition(500,300,false,1,mountRushmoreButton);
+    }
+
     void movieView(){
 
         this.getChildren().clear();
         this.applicationState = ApplicationState.MOVIE_SUBMENU;
         this.setStyle("-fx-background-color: #05031a;");
-        this.getChildren().addAll(exitButton,menuHamburgerButton,previewWindow,centerStage,
-                myLibraryButton,watchListButton,hallOfFameButton,homeButton,mountRushmoreButton);
+        centerStage.getChildren().clear();
+        centerStage.getChildren().add(mostRecentWatchIV);
+        this.getChildren().addAll(exitButton,menuHamburgerButton,previewWindow,centerStage,homeButton);
     }
 
     void addEventHandlers(Controller controller){
@@ -120,7 +130,7 @@ public class View extends Pane {
         menuHamburgerButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                //Start transition
+                showSubMenuButtons();
             }
         });
         menuHamburgerButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -236,7 +246,7 @@ public class View extends Pane {
 
     private void startTransition(int animationDuration, int animationYTransition, boolean transitionAutoReverse, int transitionCycleCount, Node node){
         TranslateTransition transition = new TranslateTransition();
-        transition.setDuration(Duration.seconds(animationDuration));
+        transition.setDuration(Duration.millis(animationDuration));
         transition.setToY(animationYTransition);
         transition.setAutoReverse(transitionAutoReverse);
         transition.setCycleCount(transitionCycleCount);
@@ -277,6 +287,7 @@ public class View extends Pane {
         hallOfFameButtonImage = new Image("crown.png");
         mountRushmoreButtonImage = new Image("mount-rushmore (1).png");
         homeButtonImage = new Image("home.png");
+        mostRecentWatchImage = new Image("Django-Unchained.png");
         movieButtonIV = new ImageView();
         tv_seriesButtonIV = new ImageView();
         backgroundIV = new ImageView();
@@ -287,6 +298,7 @@ public class View extends Pane {
         hallOfFameButtonIV = new ImageView();
         mountRushmoreButtonIV = new ImageView();
         homeButtonIV = new ImageView();
+        mostRecentWatchIV = new ImageView();
         homeButton = new Pane();
         mountRushmoreButton = new Pane();
         exitButton = new Pane();
@@ -320,6 +332,8 @@ public class View extends Pane {
         hallOfFameButtonIV.setImage(hallOfFameButtonImage);
         mountRushmoreButtonIV.setImage(mountRushmoreButtonImage);
         homeButtonIV.setImage(homeButtonImage);
+        mostRecentWatchIV.setImage(mostRecentWatchImage);
+        mostRecentWatchIV.setViewport(new Rectangle2D(0,0,500,700));
         myLibraryText = new Text("My Library");
         watchListText = new Text("Watchlist");
         hallOfFameText = new Text("Hall of Fame");
@@ -348,10 +362,10 @@ public class View extends Pane {
         menuHamburgerButton.relocate(100,100);
         previewWindow.relocate(1100,100);
         previewWindow.setPrefSize(350,700);
-        myLibraryButton.relocate(100,175);
-        watchListButton.relocate(100,250);
-        hallOfFameButton.relocate(100,325);
-        mountRushmoreButton.relocate(100,400);
+        myLibraryButton.relocate(100,100);
+        watchListButton.relocate(100,100);
+        hallOfFameButton.relocate(100,100);
+        mountRushmoreButton.relocate(100,100);
 
         smallIconBackground = new Background(new BackgroundFill(Color.web("0x0f094d"),new CornerRadii(10),new Insets(-5)));
         border = new Border(new BorderStroke(Color.web("0xF4F4F4"),BorderStrokeStyle.SOLID,new CornerRadii(10),BorderWidths.DEFAULT));
