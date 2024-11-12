@@ -29,16 +29,16 @@ public class View extends Pane {
 
     //GUI Components
     private ImageView backgroundIV, movieButtonIV, tv_seriesButtonIV, exitButtonIV, menuHamburgerButtonIV,
-            myLibraryButtonIV, watchListButtonIV, hallOfFameButtonIV;
+            myLibraryButtonIV, watchListButtonIV, hallOfFameButtonIV, mountRushmoreButtonIV, homeButtonIV;
     private Pane movieButton, tv_seriesButton, exitButton, menuHamburgerButton, previewWindow, myLibrary,
-            myLibraryButton, centerStage, watchListButton, hallOfFameButton;
+            myLibraryButton, centerStage, watchListButton, hallOfFameButton, mountRushmoreButton, homeButton;
     private ScrollPane myLibraryScrollPane;
     private Image mainMenuImage, mainMenuOutlineIcon, exitButtonImage, menuHamburgerButtonImage, myLibraryButtonImage,
-            watchListButtonImage, hallOfFameButtonImage;
+            watchListButtonImage, hallOfFameButtonImage, mountRushmoreButtonImage, homeButtonImage;
     private Background smallIconBackground;
     private Border border;
     private List<MyLibraryLine> myLibraryList;
-    private Text myLibraryText, watchListText, hallOfFameText;
+    private Text myLibraryText, watchListText, hallOfFameText, mountRushmoreText;
 
     public View(Stage stage){
         initView();
@@ -68,7 +68,7 @@ public class View extends Pane {
         this.applicationState = ApplicationState.MOVIE_SUBMENU;
         this.setStyle("-fx-background-color: #05031a;");
         this.getChildren().addAll(exitButton,menuHamburgerButton,previewWindow,centerStage,
-                myLibraryButton,watchListButton,hallOfFameButton);
+                myLibraryButton,watchListButton,hallOfFameButton,homeButton,mountRushmoreButton);
     }
 
     void addEventHandlers(Controller controller){
@@ -197,6 +197,41 @@ public class View extends Pane {
                 //controller.handleHallOfFame();
             }
         });
+        homeButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCursor(Cursor.HAND);
+                homeButton.setBackground(smallIconBackground);
+            }
+        });
+        homeButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCursor(Cursor.DEFAULT);
+                homeButton.setBackground(null);
+            }
+        });
+        homeButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                applicationState = ApplicationState.MAIN_MENU;
+                mainMenuView();
+            }
+        });
+        mountRushmoreButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCursor(Cursor.HAND);
+                mountRushmoreButton.setBackground(smallIconBackground);
+            }
+        });
+        mountRushmoreButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                setCursor(Cursor.DEFAULT);
+                mountRushmoreButton.setBackground(null);
+            }
+        });
     }
 
     private void startTransition(int animationDuration, int animationYTransition, boolean transitionAutoReverse, int transitionCycleCount, Node node){
@@ -240,6 +275,8 @@ public class View extends Pane {
         myLibraryButtonImage = new Image("myLibraryIcon.png");
         watchListButtonImage = new Image("to-do.png");
         hallOfFameButtonImage = new Image("crown.png");
+        mountRushmoreButtonImage = new Image("mount-rushmore (1).png");
+        homeButtonImage = new Image("home.png");
         movieButtonIV = new ImageView();
         tv_seriesButtonIV = new ImageView();
         backgroundIV = new ImageView();
@@ -248,6 +285,10 @@ public class View extends Pane {
         myLibraryButtonIV = new ImageView();
         watchListButtonIV = new ImageView();
         hallOfFameButtonIV = new ImageView();
+        mountRushmoreButtonIV = new ImageView();
+        homeButtonIV = new ImageView();
+        homeButton = new Pane();
+        mountRushmoreButton = new Pane();
         exitButton = new Pane();
         movieButton = new Pane();
         tv_seriesButton = new Pane();
@@ -267,6 +308,8 @@ public class View extends Pane {
         myLibraryButton.getChildren().add(myLibraryButtonIV);
         watchListButton.getChildren().add(watchListButtonIV);      //Tänk på TODO Varför har jag olika imageviews? måste gå att göra annat
         hallOfFameButton.getChildren().add(hallOfFameButtonIV);
+        mountRushmoreButton.getChildren().add(mountRushmoreButtonIV);
+        homeButton.getChildren().add(homeButtonIV);
         movieButtonIV.setImage(mainMenuOutlineIcon);
         tv_seriesButtonIV.setImage(mainMenuOutlineIcon);
         backgroundIV.setImage(mainMenuImage);
@@ -275,9 +318,12 @@ public class View extends Pane {
         myLibraryButtonIV.setImage(myLibraryButtonImage);
         watchListButtonIV.setImage(watchListButtonImage);
         hallOfFameButtonIV.setImage(hallOfFameButtonImage);
+        mountRushmoreButtonIV.setImage(mountRushmoreButtonImage);
+        homeButtonIV.setImage(homeButtonImage);
         myLibraryText = new Text("My Library");
         watchListText = new Text("Watchlist");
         hallOfFameText = new Text("Hall of Fame");
+        mountRushmoreText = new Text("Mount Rushmore");
         myLibraryText.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
         myLibraryText.setFill(Color.WHITE);
         myLibraryButton.getChildren().add(myLibraryText);
@@ -289,8 +335,13 @@ public class View extends Pane {
         hallOfFameText.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
         hallOfFameText.setFill(Color.WHITE);
         hallOfFameButton.getChildren().add(hallOfFameText);
+        mountRushmoreText.setFont(Font.font("Verdana", FontWeight.BOLD, 25));
+        mountRushmoreText.setFill(Color.WHITE);
+        mountRushmoreButton.getChildren().add(mountRushmoreText);
+        mountRushmoreText.relocate(50,0);
         hallOfFameText.relocate(50,0);
         exitButton.relocate(1400,25);
+        homeButton.relocate(1300,25);
         centerStage.relocate(500,100);
         centerStage.setPrefSize(500,700);
         myLibraryScrollPane.setPrefSize(500,700);
@@ -300,6 +351,7 @@ public class View extends Pane {
         myLibraryButton.relocate(100,175);
         watchListButton.relocate(100,250);
         hallOfFameButton.relocate(100,325);
+        mountRushmoreButton.relocate(100,400);
 
         smallIconBackground = new Background(new BackgroundFill(Color.web("0x0f094d"),new CornerRadii(10),new Insets(-5)));
         border = new Border(new BorderStroke(Color.web("0xF4F4F4"),BorderStrokeStyle.SOLID,new CornerRadii(10),BorderWidths.DEFAULT));
