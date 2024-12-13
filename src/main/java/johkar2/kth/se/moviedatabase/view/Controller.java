@@ -21,6 +21,17 @@ public class Controller {
 
     void handleMovieSelected(){
         view.movieView();
+        try {
+            model.readFromFile();
+        } catch(Exception e){
+            //alert.
+        }
+    }
+
+    void handleMenuHamburger(boolean flipped){
+        view.rotateMenuHamburger();
+        if (flipped) view.hideSubMenuButtons();
+        else view.showSubMenuButtons();
     }
 
     void handleHover(Object source){

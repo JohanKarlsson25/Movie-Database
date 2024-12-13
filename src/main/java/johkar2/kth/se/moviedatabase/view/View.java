@@ -2,6 +2,7 @@ package johkar2.kth.se.moviedatabase.view;
 
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -19,7 +20,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import johkar2.kth.se.moviedatabase.model.Media;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +40,7 @@ public class View extends Pane {
     private Border border;
     private List<MyLibraryLine> myLibraryList;
     private Text myLibraryText, watchListText, hallOfFameText, mountRushmoreText;
+    private boolean flipped;
 
     public View(Stage stage){
         initView();
@@ -63,12 +64,35 @@ public class View extends Pane {
         centerStage.getChildren().add(myLibraryScrollPane);
     }
 
-    void showSubMenuButtons(){
+    void showSubMenuButtons() throws InterruptedException {
         this.getChildren().addAll(myLibraryButton,watchListButton,hallOfFameButton,mountRushmoreButton);
-        startTransition(500,75,false,1,myLibraryButton);
-        startTransition(500,150,false,1,watchListButton);
-        startTransition(500,225,false,1,hallOfFameButton);
-        startTransition(500,300,false,1,mountRushmoreButton);
+        Thread transitionThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                startTransition(500,75,false,1,myLibraryButton);
+                startTransition(500,150,false,1,watchListButton);
+                startTransition(500,225,false,1,hallOfFameButton);
+                startTransition(500,300,false,1,mountRushmoreButton);
+            }
+        });
+        transitionThread.start();
+        transitionThread.join();
+        flipped = true;
+    }
+
+    void hideSubMenuButtons() throws InterruptedException { //Ska ju INTE uppdatera detta från en tråd
+        Thread transitionThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                startTransition(500,0,false,1,myLibraryButton);
+                startTransition(500,0,false,1,watchListButton);
+                startTransition(500,0,false,1,hallOfFameButton);
+                startTransition(500,0,false,1,mountRushmoreButton);
+            }
+        });
+        transitionThread.start();
+        //this.getChildren().removeAll(myLibraryButton,watchListButton,hallOfFameButton,mountRushmoreButton);
+        flipped = false;
     }
 
     void movieView(){
@@ -130,7 +154,8 @@ public class View extends Pane {
         menuHamburgerButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                showSubMenuButtons();
+                System.out.println(flipped);
+                controller.handleMenuHamburger(flipped);
             }
         });
         menuHamburgerButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -252,6 +277,13 @@ public class View extends Pane {
         transition.setCycleCount(transitionCycleCount);
         transition.setNode(node);
         transition.play();
+        if (animationYTransition < 1){
+        transition.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                getChildren().remove(node);
+            }
+        });}
     }
 
     ImageView getMovieButton(){
@@ -373,6 +405,8 @@ public class View extends Pane {
         centerStage.setBorder(border);
 
         myLibraryList = new ArrayList<>();
+
+        flipped = false;
 
         mainMenuView();
     }

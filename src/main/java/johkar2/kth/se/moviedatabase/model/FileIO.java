@@ -23,7 +23,7 @@ public class FileIO {
         ObjectInputStream ois = null;
         ArrayList<Media> list;
         try {
-            FileInputStream fin = new FileInputStream("mediaList.ser");
+            FileInputStream fin = new FileInputStream("media.ser");
             ois = new ObjectInputStream(fin);
             list = (ArrayList<Media>) ois.readObject();
         } finally {
