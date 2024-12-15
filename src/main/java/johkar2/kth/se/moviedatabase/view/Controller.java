@@ -1,40 +1,49 @@
 package johkar2.kth.se.moviedatabase.view;
 
-import javafx.scene.Cursor;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import johkar2.kth.se.moviedatabase.model.Model;
-import java.io.IOException;
 
 public class Controller {
 
-    private View view;
+    private StartMenuView startMenuView;
+    private MainMenuView mainMenuView;
     private Model model;
+    private Scene startMenuScene,mainMenuScene;
+    private Stage stage;
 
-    public Controller(View view, Model model){
-        this.view = view;
-        this.model = model;
-        this.view.addEventHandlers(this);
+    public Controller(StartMenuView view, Scene scene, Stage stage){
+
+        this.startMenuScene = scene;
+        this.stage = stage;
+        this.startMenuView = view;
+        this.model = new Model();
+        this.mainMenuView = new MainMenuView();
+        startMenuView.addEventHandlers(this);
+        this.mainMenuScene = new Scene(mainMenuView);
+        mainMenuView.addEventHandlers(this);
     }
 
-    void handleTvSeriesSelected(){
-        System.out.println("TV");
+    void handleEnterSelected(){
+        stage.setScene(mainMenuScene);
     }
 
-    void handleMovieSelected(){
-        view.movieView();
-        try {
-            model.readFromFile();
-        } catch(Exception e){
-            //alert.
-        }
+    void handleHomeSelected(){
+        stage.setScene(startMenuScene);
     }
 
     void handleMenuHamburger(boolean flipped){
+        if (flipped) mainMenuView.hideMenuHamburgerSubMenu();
+        else mainMenuView.showMenuHamburgerSubMenu();
+    }
+
+    /*void handleMenuHamburger(boolean flipped){
         view.rotateMenuHamburger();
         if (flipped) view.hideSubMenuButtons();
         else view.showSubMenuButtons();
-    }
+    }*/
 
-    void handleHover(Object source){
+    /*void handleHover(Object source){
         if (source.equals(view.getMovieButton())){
             System.out.println("Movie hover");
         } else if (source.equals(view.getTv_seriesButton())){
@@ -47,7 +56,7 @@ public class Controller {
     void handleMyLibrary(ApplicationState applicationState){
         view.generateMyLibraryList((applicationState == ApplicationState.MOVIE_SUBMENU) ? model.getAllMovies() : model.getAllTv_Series());
         view.showMyLibrary();
-    }
+    }*/
 
     void handleAdd(ApplicationState applicationState){
         switch (applicationState){
