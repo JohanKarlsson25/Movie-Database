@@ -5,7 +5,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import java.awt.*;
 import java.util.List;
 
 public class MainMenuView extends View {
@@ -14,13 +18,14 @@ public class MainMenuView extends View {
 
     private ImageView exitButtonImageView,menuHamburgerButtonImageView,myLibraryButtonImageView,watchListButtonImageView,
             hallOfFameButtonImageView,mountRushmoreButtonImageView,homeButtonImageView,mostRecentWatchImageView;
-    private Image exitButtonImage,menuHamburgerImage,myLibraryButtonImage,watchListButtonImage,hallOfFameButtonImage,mountRushmoreButtonImage,homeButtonImage,mostRecentWatchImage;
+    private Image exitButtonImage,menuHamburgerImage,myLibraryButtonImage,watchListButtonImage,hallOfFameButtonImage,
+            mountRushmoreButtonImage,homeButtonImage,mostRecentWatchImage;
     private Pane exitButton,menuHamburgerButton,previewWindow,myLibraryButton,centerStage,watchListButton,hallOfFameButton,mountRushmoreButton,homeButton;
+    private Text myLibraryText, watchListText, hallOfFameText, mountRushmoreText;
     //Skulle va snyggt med egen definierad Button class som gör att man kan lägga text hur som helst.
 
     private ScrollPane myLibraryScrollPane;
     private List<MyLibraryLine> myLibraryList;
-    private Text myLibraryText, watchListText, hallOfFameText, mountRushmoreText;
 
 
 
@@ -50,7 +55,7 @@ public class MainMenuView extends View {
             homeButton.setBackground(null);});
 
         menuHamburgerButton.setOnMouseClicked(mouseEvent -> {
-            AnimationHandler.rotateObject(menuHamburgerButton,700,180,false,1);
+            AnimationHandler.rotateObject(menuHamburgerButton,500,180,false,1);
             controller.handleMenuHamburger(flipped);});
         menuHamburgerButton.setOnMouseEntered(mouseEvent -> {
             setCursor(Cursor.HAND);
@@ -64,18 +69,18 @@ public class MainMenuView extends View {
 
     void showMenuHamburgerSubMenu(){
         this.getChildren().addAll(myLibraryButton,watchListButton,hallOfFameButton,mountRushmoreButton);
-        AnimationHandler.startTransition(myLibraryButton,this,500,75,false,1,false);
-        AnimationHandler.startTransition(watchListButton,this,500,150,false,1,false);
-        AnimationHandler.startTransition(hallOfFameButton,this,500,225,false,1,false);
-        AnimationHandler.startTransition(mountRushmoreButton,this,500,300,false,1,false);
+        AnimationHandler.startTransition(myLibraryButton,this,400,75,false,1,false);
+        AnimationHandler.startTransition(watchListButton,this,400,150,false,1,false);
+        AnimationHandler.startTransition(hallOfFameButton,this,400,225,false,1,false);
+        AnimationHandler.startTransition(mountRushmoreButton,this,400,300,false,1,false);
         flipped = true;
     }
 
     void hideMenuHamburgerSubMenu(){
-        AnimationHandler.startTransition(myLibraryButton,this,500,0,false,1,true);
-        AnimationHandler.startTransition(watchListButton,this,500,0,false,1,true);
-        AnimationHandler.startTransition(hallOfFameButton,this,500,0,false,1,true);
-        AnimationHandler.startTransition(mountRushmoreButton,this,500,0,false,1,true);
+        AnimationHandler.startTransition(myLibraryButton,this,400,0,false,1,true);
+        AnimationHandler.startTransition(watchListButton,this,400,0,false,1,true);
+        AnimationHandler.startTransition(hallOfFameButton,this,400,0,false,1,true);
+        AnimationHandler.startTransition(mountRushmoreButton,this,400,0,false,1,true);
         flipped = false;
     }
 
@@ -114,6 +119,22 @@ public class MainMenuView extends View {
         mountRushmoreButton = new Pane();
         homeButton = new Pane();
 
+        //Create all the Text objects
+        myLibraryText = new Text("My Library");
+        watchListText = new Text("Watch List");
+        hallOfFameText = new Text("Hall of Fame");
+        mountRushmoreText = new Text("Mount Rushmore");
+
+        //Defining properties of Texts
+        myLibraryText.setFont(buttonTextFont);
+        myLibraryText.setFill(Color.WHITE);
+        watchListText.setFont(buttonTextFont);
+        watchListText.setFill(Color.WHITE);
+        hallOfFameText.setFont(buttonTextFont);
+        hallOfFameText.setFill(Color.WHITE);
+        mountRushmoreText.setFont(buttonTextFont);
+        mountRushmoreText.setFill(Color.WHITE);
+
         //Place all fixed components
         exitButton.relocate(1400,25);
         menuHamburgerButton.relocate(100,100);
@@ -133,6 +154,18 @@ public class MainMenuView extends View {
         hallOfFameButton.getChildren().add(hallOfFameButtonImageView);
         mountRushmoreButton.getChildren().add(mountRushmoreButtonImageView);
         homeButton.getChildren().add(homeButtonImageView);
+
+        //Add the texts to the Buttons
+        myLibraryButton.getChildren().add(myLibraryText);
+        watchListButton.getChildren().add(watchListText);
+        hallOfFameButton.getChildren().add(hallOfFameText);
+        mountRushmoreButton.getChildren().add(mountRushmoreText);
+
+        //Bind text to respective icon
+        myLibraryText.relocate(myLibraryButtonImageView.getX() + 50, myLibraryButtonImageView.getY() + 3);
+        watchListText.relocate(watchListButtonImageView.getX() + 50, watchListButtonImageView.getY() + 3);
+        hallOfFameText.relocate(hallOfFameButtonImageView.getX() + 50, hallOfFameButtonImageView.getY() + 3);
+        mountRushmoreText.relocate(mountRushmoreButtonImageView.getX() + 50, mountRushmoreButtonImageView.getY() + 3);
 
         //Define specified sizes of components
         centerStage.setPrefSize(500,700);

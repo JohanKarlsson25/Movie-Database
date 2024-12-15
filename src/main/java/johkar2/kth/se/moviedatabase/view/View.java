@@ -1,18 +1,23 @@
 package johkar2.kth.se.moviedatabase.view;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
+
 import java.util.List;
 
 public class View extends Pane {
 
-    protected final int windowWidth = 1500, windowHeight = 900;
+    protected final int windowWidth, windowHeight;
     protected ApplicationState applicationState;
     protected final Border border = new Border(new BorderStroke(Color.web("0xF4F4F4"),BorderStrokeStyle.SOLID,new CornerRadii(10),BorderWidths.DEFAULT));
     protected final Background smallIconBackground = new Background(new BackgroundFill(Color.web("0x0f094d"),new CornerRadii(10),new Insets(-5)));
+    protected final Font buttonTextFont = new Font("Book Antiqua Bold",20);
 
     //GUI Components
 
@@ -21,9 +26,12 @@ public class View extends Pane {
     private Text myLibraryText, watchListText, hallOfFameText, mountRushmoreText;
 
     public View(){
-        this.setPrefSize(windowWidth,windowHeight);
         //initView();
         this.applicationState = ApplicationState.MAIN_MENU;
+        Rectangle2D screenSize = Screen.getPrimary().getBounds();
+        windowWidth = (int) screenSize.getWidth() - 80;
+        windowHeight = (int) screenSize.getHeight() - 80; //big issues, I need to make every fixed component bind to screensize
+        this.setPrefSize(windowWidth,windowHeight);
     }
 /*
     void mainMenuView(){
