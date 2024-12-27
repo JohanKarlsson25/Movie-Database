@@ -41,6 +41,6 @@ public class StartMenuView extends View {
         backGroundImageView.setImage(backgroundImage);
         enterButtonImageView.setImage(enterButtonImage);
 
-        AnimationHandler.startTransition(backGroundImageView,this,30000,-3000,true,Animation.INDEFINITE,false);
+        AnimationHandler.startMoveTransition(backGroundImageView,this,30000,-3000,true,Animation.INDEFINITE,false);
     }
 }

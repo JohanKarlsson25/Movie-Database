@@ -20,7 +20,6 @@ public class View extends Pane {
     protected final Font buttonTextFont = new Font("Book Antiqua Bold",20);
 
     //GUI Components
-
     private ScrollPane myLibraryScrollPane;
     private List<MyLibraryLine> myLibraryList;
     private Text myLibraryText, watchListText, hallOfFameText, mountRushmoreText;
@@ -29,8 +28,9 @@ public class View extends Pane {
         //initView();
         this.applicationState = ApplicationState.MAIN_MENU;
         Rectangle2D screenSize = Screen.getPrimary().getBounds();
-        windowWidth = (int) screenSize.getWidth() - 80;
-        windowHeight = (int) screenSize.getHeight() - 80; //big issues, I need to make every fixed component bind to screensize
+        System.out.println(screenSize);
+        windowWidth = (int) (screenSize.getWidth()*0.9);
+        windowHeight = (int) (screenSize.getHeight()*0.9); //big issues, I need to make every fixed component bind to screensize
         this.setPrefSize(windowWidth,windowHeight);
     }
 /*

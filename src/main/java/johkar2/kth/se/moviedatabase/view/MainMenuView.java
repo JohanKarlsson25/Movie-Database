@@ -6,10 +6,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenuView extends View {
@@ -24,15 +23,35 @@ public class MainMenuView extends View {
     private Text myLibraryText, watchListText, hallOfFameText, mountRushmoreText;
     //Skulle va snyggt med egen definierad Button class som gör att man kan lägga text hur som helst.
 
+    List<IconObject> iconObjectList = new ArrayList<>();
+
     private ScrollPane myLibraryScrollPane;
     private List<MyLibraryLine> myLibraryList;
-
-
 
     public MainMenuView(){
         super();
         initUI();
         flipped = false;
+    }
+
+    void showBrowse(List<IconObject> iconObjectList){
+        centerStage.getChildren().clear();
+
+        this.iconObjectList = iconObjectList;
+
+        int spacingValue = 0;
+        for (IconObject iconObject : iconObjectList){
+            centerStage.getChildren().add(iconObject);
+            iconObject.relocate(200*spacingValue++ + spacingValue*10,10); //I want two Rows. Maybe one with TV_series one movies or category switch between TV movie //DESIGN
+        }
+    }
+
+    void hoverIconObject(IconObject objectToBeHovered){
+        objectToBeHovered.relocate(iconObjectList.indexOf(objectToBeHovered)*210 + 10, 5);
+    }
+
+    void unHoverIconObject(IconObject currentHoveredObject){
+        currentHoveredObject.relocate(iconObjectList.indexOf(currentHoveredObject)*210 + 10,10);
     }
 
     void addEventHandlers(Controller controller){
@@ -64,23 +83,57 @@ public class MainMenuView extends View {
             setCursor(Cursor.DEFAULT);
             menuHamburgerButton.setBackground(null);});
 
+        myLibraryButton.setOnMouseClicked(mouseEvent -> {
+            controller.handleMyLibrarySelected();});
+        myLibraryButton.setOnMouseEntered(mouseEvent -> {
+            setCursor(Cursor.HAND);
+            myLibraryButton.setBackground(smallIconBackground);});
+        myLibraryButton.setOnMouseExited(mouseEvent -> {
+            setCursor(Cursor.DEFAULT);
+            myLibraryButton.setBackground(null);});
 
+        watchListButton.setOnMouseClicked(mouseEvent -> {
+            controller.handleWatchListSelected();});
+        watchListButton.setOnMouseEntered(mouseEvent -> {
+            setCursor(Cursor.HAND);
+            watchListButton.setBackground(smallIconBackground);});
+        watchListButton.setOnMouseExited(mouseEvent -> {
+            setCursor(Cursor.DEFAULT);
+            watchListButton.setBackground(null);});
+
+        hallOfFameButton.setOnMouseClicked(mouseEvent -> {
+            controller.handleHallOfFameSelected();});
+        hallOfFameButton.setOnMouseEntered(mouseEvent -> {
+            setCursor(Cursor.HAND);
+            hallOfFameButton.setBackground(smallIconBackground);});
+        hallOfFameButton.setOnMouseExited(mouseEvent -> {
+            setCursor(Cursor.DEFAULT);
+            hallOfFameButton.setBackground(null);});
+
+        mountRushmoreButton.setOnMouseClicked(mouseEvent -> {
+            controller.handleMountRushmoreSelected();});
+        mountRushmoreButton.setOnMouseEntered(mouseEvent -> {
+            setCursor(Cursor.HAND);
+            mountRushmoreButton.setBackground(smallIconBackground);});
+        mountRushmoreButton.setOnMouseExited(mouseEvent -> {
+            setCursor(Cursor.DEFAULT);
+            mountRushmoreButton.setBackground(null);});
     }
 
     void showMenuHamburgerSubMenu(){
         this.getChildren().addAll(myLibraryButton,watchListButton,hallOfFameButton,mountRushmoreButton);
-        AnimationHandler.startTransition(myLibraryButton,this,400,75,false,1,false);
-        AnimationHandler.startTransition(watchListButton,this,400,150,false,1,false);
-        AnimationHandler.startTransition(hallOfFameButton,this,400,225,false,1,false);
-        AnimationHandler.startTransition(mountRushmoreButton,this,400,300,false,1,false);
+        AnimationHandler.startFadeTransition(myLibraryButton,this,400,75,false,1,false);
+        AnimationHandler.startFadeTransition(watchListButton,this,400,150,false,1,false);
+        AnimationHandler.startFadeTransition(hallOfFameButton,this,400,225,false,1,false);
+        AnimationHandler.startFadeTransition(mountRushmoreButton,this,400,300,false,1,false);
         flipped = true;
     }
 
     void hideMenuHamburgerSubMenu(){
-        AnimationHandler.startTransition(myLibraryButton,this,400,0,false,1,true);
-        AnimationHandler.startTransition(watchListButton,this,400,0,false,1,true);
-        AnimationHandler.startTransition(hallOfFameButton,this,400,0,false,1,true);
-        AnimationHandler.startTransition(mountRushmoreButton,this,400,0,false,1,true);
+        AnimationHandler.startFadeTransition(myLibraryButton,this,400,0,false,1,true);
+        AnimationHandler.startFadeTransition(watchListButton,this,400,0,false,1,true);
+        AnimationHandler.startFadeTransition(hallOfFameButton,this,400,0,false,1,true);
+        AnimationHandler.startFadeTransition(mountRushmoreButton,this,400,0,false,1,true);
         flipped = false;
     }
 
@@ -136,15 +189,15 @@ public class MainMenuView extends View {
         mountRushmoreText.setFill(Color.WHITE);
 
         //Place all fixed components
-        exitButton.relocate(1400,25);
-        menuHamburgerButton.relocate(100,100);
-        centerStage.relocate(500,100);
-        homeButton.relocate(1300,25);
-        previewWindow.relocate(1100,100);
-        myLibraryButton.relocate(100,100);
-        watchListButton.relocate(100,100);
-        hallOfFameButton.relocate(100,100);
-        mountRushmoreButton.relocate(100,100);
+        exitButton.relocate(windowWidth*14.0/15,windowHeight*5.0/216);
+        menuHamburgerButton.relocate(windowWidth*10.0/192,windowHeight*10.0/108);
+        centerStage.relocate(450,windowHeight*10.0/108);
+        homeButton.relocate(windowWidth*13.4/15,windowHeight*5.0/216);
+        previewWindow.relocate(windowWidth*11.0/15,windowHeight*10.0/108);
+        myLibraryButton.relocate(windowWidth*10.0/192,windowHeight*10.0/108);
+        watchListButton.relocate(windowWidth*10.0/192,windowHeight*10.0/108);
+        hallOfFameButton.relocate(windowWidth*10.0/192,windowHeight*10.0/108);
+        mountRushmoreButton.relocate(windowWidth*10.0/192,windowHeight*10.0/108);
 
         //Add the imageViews on to the respective button
         exitButton.getChildren().add(exitButtonImageView);
@@ -168,8 +221,8 @@ public class MainMenuView extends View {
         mountRushmoreText.relocate(mountRushmoreButtonImageView.getX() + 50, mountRushmoreButtonImageView.getY() + 3);
 
         //Define specified sizes of components
-        centerStage.setPrefSize(500,700);
-        previewWindow.setPrefSize(350,700);
+        centerStage.setPrefSize(850,600);
+        previewWindow.setPrefSize(10,10);
 
         //Set border of bordered components
         centerStage.setBorder(border);

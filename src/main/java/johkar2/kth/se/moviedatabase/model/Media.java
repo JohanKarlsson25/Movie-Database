@@ -10,7 +10,8 @@ public abstract class Media implements Serializable {
     private String description;
     private double rating;
     private int year, hours, minutes;
-    private Image image;
+    private Image image; //?????
+    //Should be functionality in view to check title and get corresponding image from that title
 
     protected Media(String title, String description, double rating, int year, int hours, int minutes){
         this.title = title;

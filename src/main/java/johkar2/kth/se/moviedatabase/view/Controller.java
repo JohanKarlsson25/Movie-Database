@@ -2,7 +2,10 @@ package johkar2.kth.se.moviedatabase.view;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import johkar2.kth.se.moviedatabase.model.Media;
 import johkar2.kth.se.moviedatabase.model.Model;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
@@ -12,16 +15,20 @@ public class Controller {
     private Scene startMenuScene,mainMenuScene;
     private Stage stage;
 
-    public Controller(StartMenuView view, Scene scene, Stage stage){
-
+    public Controller(StartMenuView view, Scene scene, Stage stage) {
         this.startMenuScene = scene;
         this.stage = stage;
         this.startMenuView = view;
-        this.model = new Model();
         this.mainMenuView = new MainMenuView();
         startMenuView.addEventHandlers(this);
         this.mainMenuScene = new Scene(mainMenuView);
         mainMenuView.addEventHandlers(this);
+
+        try {
+            this.model = new Model();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     void handleEnterSelected(){
@@ -37,20 +44,39 @@ public class Controller {
         else mainMenuView.showMenuHamburgerSubMenu();
     }
 
+    void handleMyLibrarySelected(){
+        handleBrowseSelected();
+    }
+
+    void handleWatchListSelected(){
+
+    }
+
+    void handleHallOfFameSelected(){
+
+    }
+
+    void handleMountRushmoreSelected(){
+
+    }
+
+    void handleBrowseSelected(){
+        List<Media> mediaList = model.getAllMedia();
+        mainMenuView.showBrowse(generateIconObjects(mediaList));
+    }
+
+    void handleHover(IconObject iconObject){
+        mainMenuView.hoverIconObject(iconObject);
+    }
+
+    void handleHoverEnded(IconObject iconObject){
+        mainMenuView.unHoverIconObject(iconObject);
+    }
+
     /*void handleMenuHamburger(boolean flipped){
         view.rotateMenuHamburger();
         if (flipped) view.hideSubMenuButtons();
         else view.showSubMenuButtons();
-    }*/
-
-    /*void handleHover(Object source){
-        if (source.equals(view.getMovieButton())){
-            System.out.println("Movie hover");
-        } else if (source.equals(view.getTv_seriesButton())){
-            System.out.println("tvseries hover");
-        } //else if (source.equals(view.getExitButton())){
-            //view.setCursor(Cursor.HAND);
-        //}
     }
 
     void handleMyLibrary(ApplicationState applicationState){
@@ -69,8 +95,18 @@ public class Controller {
         try{
             model.writeToFile();
         } catch (Exception e){
-            //view.alert();
+            e.printStackTrace();
+            System.out.println("Exit funkade inte");
         }
         System.exit(0);
+    }
+
+    private List<IconObject> generateIconObjects(List<Media> mediaList){
+        List<IconObject> iconObjectList = new ArrayList<>();
+        for (Media m : mediaList){
+            iconObjectList.add(new IconObject(m.getTitle(),this));
+        }
+
+        return iconObjectList;
     }
 }
