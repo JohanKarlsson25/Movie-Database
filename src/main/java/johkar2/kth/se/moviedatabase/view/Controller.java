@@ -33,9 +33,12 @@ public class Controller {
 
     void handleEnterSelected(){
         stage.setScene(mainMenuScene);
+        mainMenuView.startView(model.getMostRecentWatch().getTitle());
     }
 
     void handleHomeSelected(){
+        if (mainMenuView.getFlippedStatus()) mainMenuView.hideMenuHamburgerSubMenu();
+        mainMenuView.startView(model.getMostRecentWatch().getTitle());
         stage.setScene(startMenuScene);
     }
 
@@ -61,29 +64,24 @@ public class Controller {
     }
 
     void handleBrowseSelected(){
-        List<Media> mediaList = model.getAllMedia();
-        mainMenuView.showBrowse(generateIconObjects(mediaList));
+        List<Media> movieList = model.getAllMovies();
+        List<Media> tv_SeriesList = model.getAllTv_Series();
+        mainMenuView.showBrowse(generateIconObjects(movieList),generateIconObjects(tv_SeriesList));
     }
 
     void handleHover(IconObject iconObject){
-        mainMenuView.hoverIconObject(iconObject);
+        mainMenuView.hoverIconObject(iconObject, isMovie(iconObject));
     }
 
     void handleHoverEnded(IconObject iconObject){
-        mainMenuView.unHoverIconObject(iconObject);
+        mainMenuView.unHoverIconObject(iconObject, isMovie(iconObject));
     }
-
-    /*void handleMenuHamburger(boolean flipped){
-        view.rotateMenuHamburger();
-        if (flipped) view.hideSubMenuButtons();
-        else view.showSubMenuButtons();
-    }
-
+/*
     void handleMyLibrary(ApplicationState applicationState){
         view.generateMyLibraryList((applicationState == ApplicationState.MOVIE_SUBMENU) ? model.getAllMovies() : model.getAllTv_Series());
         view.showMyLibrary();
-    }*/
-
+    }
+*/
     void handleAdd(ApplicationState applicationState){
         switch (applicationState){
             //case MOVIE_SUBMENU : model.addMovie(); break;
@@ -108,5 +106,13 @@ public class Controller {
         }
 
         return iconObjectList;
+    }
+
+    private boolean isMovie(IconObject iconObject){
+        List<Media> movieList = model.getAllMovies();
+        for (Media media : movieList){
+            if (iconObject.getTitle().equals(media.getTitle())) return true;
+        }
+        return false;
     }
 }

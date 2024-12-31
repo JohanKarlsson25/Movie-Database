@@ -10,15 +10,20 @@ import javafx.scene.shape.Rectangle;
 public class IconObject extends Pane {
 
     private ImageView mainImageView, dotsImageView;
-    private Controller controller;
+    private final Controller controller;
+
+    private final String title;
 
     Rectangle imageRectangle = new Rectangle(0,0,180,180);
 
     public IconObject(String title, Controller controller){
         this.controller = controller;
-        initUI(title);
+        this.title = title;
+        initUI();
         addEventHandlers();
     }
+
+    public String getTitle(){return title;}
 
     private void addEventHandlers(){
         mainImageView.setOnMouseEntered(mouseEvent -> {
@@ -29,7 +34,7 @@ public class IconObject extends Pane {
             controller.handleHoverEnded(this);});
     }
 
-    private void initUI(String title){
+    private void initUI(){
         this.setPrefSize(190,190);
         this.mainImageView = new ImageView();
         this.dotsImageView = new ImageView();

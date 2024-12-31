@@ -16,6 +16,10 @@ public class StartMenuView extends View {
         initUI();
     }
 
+    void resetStartMenu(){
+
+    }
+
     void addEventHandlers(Controller controller){
         enterButton.setOnMouseClicked(mouseEvent -> {
             controller.handleEnterSelected();

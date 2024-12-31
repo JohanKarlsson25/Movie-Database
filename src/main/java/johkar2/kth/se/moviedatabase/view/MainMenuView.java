@@ -1,32 +1,26 @@
 package johkar2.kth.se.moviedatabase.view;
 
 import javafx.scene.Cursor;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenuView extends View {
 
     private boolean flipped;
 
-    private ImageView exitButtonImageView,menuHamburgerButtonImageView,myLibraryButtonImageView,watchListButtonImageView,
+    private ImageView exitButtonImageView,menuHamburgerButtonImageView,myLibraryButtonImageView,watchListButtonImageView, //probs dont even need these as class variables
             hallOfFameButtonImageView,mountRushmoreButtonImageView,homeButtonImageView,mostRecentWatchImageView;
     private Image exitButtonImage,menuHamburgerImage,myLibraryButtonImage,watchListButtonImage,hallOfFameButtonImage,
-            mountRushmoreButtonImage,homeButtonImage,mostRecentWatchImage;
-    private Pane exitButton,menuHamburgerButton,previewWindow,myLibraryButton,centerStage,watchListButton,hallOfFameButton,mountRushmoreButton,homeButton;
+            mountRushmoreButtonImage,homeButtonImage;
+    private Pane exitButton,menuHamburgerButton,previewWindow,myLibraryButton,watchListButton,hallOfFameButton,mountRushmoreButton,homeButton;
     private Text myLibraryText, watchListText, hallOfFameText, mountRushmoreText;
-    //Skulle va snyggt med egen definierad Button class som gör att man kan lägga text hur som helst.
+    private CenterStage centerStage;
 
-    List<IconObject> iconObjectList = new ArrayList<>();
-
-    private ScrollPane myLibraryScrollPane;
-    private List<MyLibraryLine> myLibraryList;
+    //I kinda want separate classes for the panes, For Example a CenterStage class and a previewWindow class//Less clutter in mainView
 
     public MainMenuView(){
         super();
@@ -34,24 +28,25 @@ public class MainMenuView extends View {
         flipped = false;
     }
 
-    void showBrowse(List<IconObject> iconObjectList){
-        centerStage.getChildren().clear();
+    public boolean getFlippedStatus(){return flipped;}
 
-        this.iconObjectList = iconObjectList;
-
-        int spacingValue = 0;
-        for (IconObject iconObject : iconObjectList){
-            centerStage.getChildren().add(iconObject);
-            iconObject.relocate(200*spacingValue++ + spacingValue*10,10); //I want two Rows. Maybe one with TV_series one movies or category switch between TV movie //DESIGN
-        }
+    void startView(String mostRecentWatchTitle){
+        centerStage.startScreen();
+        centerStage.setMostRecentWatchImage(mostRecentWatchTitle);
     }
 
-    void hoverIconObject(IconObject objectToBeHovered){
-        objectToBeHovered.relocate(iconObjectList.indexOf(objectToBeHovered)*210 + 10, 5);
+    void showBrowse(List<IconObject> movieIconObjectList, List<IconObject> tv_SeriesIconObjectList){
+        centerStage.browseScreen(movieIconObjectList,tv_SeriesIconObjectList);
     }
 
-    void unHoverIconObject(IconObject currentHoveredObject){
-        currentHoveredObject.relocate(iconObjectList.indexOf(currentHoveredObject)*210 + 10,10);
+    void hoverIconObject(IconObject objectToBeHovered, boolean isMovie){
+        if (isMovie) centerStage.relocateMovieIconObject(objectToBeHovered, 45);
+        else centerStage.relocateTv_SeriesIconObject(objectToBeHovered,355);
+    }
+
+    void unHoverIconObject(IconObject currentHoveredObject, boolean isMovie){
+        if (isMovie) centerStage.relocateMovieIconObject(currentHoveredObject,50);
+        else centerStage.relocateTv_SeriesIconObject(currentHoveredObject,360);
     }
 
     void addEventHandlers(Controller controller){
@@ -159,18 +154,17 @@ public class MainMenuView extends View {
         hallOfFameButtonImageView = new ImageView();
         mountRushmoreButtonImageView = new ImageView();
         homeButtonImageView = new ImageView();
-        mostRecentWatchImageView = new ImageView();
 
         //Create all the components Panes
         exitButton = new Pane();
         menuHamburgerButton = new Pane();
         previewWindow = new Pane();
         myLibraryButton = new Pane();
-        centerStage = new Pane();
         watchListButton = new Pane();
         hallOfFameButton = new Pane();
         mountRushmoreButton = new Pane();
         homeButton = new Pane();
+        centerStage = new CenterStage();
 
         //Create all the Text objects
         myLibraryText = new Text("My Library");
@@ -221,12 +215,11 @@ public class MainMenuView extends View {
         mountRushmoreText.relocate(mountRushmoreButtonImageView.getX() + 50, mountRushmoreButtonImageView.getY() + 3);
 
         //Define specified sizes of components
-        centerStage.setPrefSize(850,600);
         previewWindow.setPrefSize(10,10);
 
         //Set border of bordered components
-        centerStage.setBorder(border);
         previewWindow.setBorder(border);
+        centerStage.setBorder(border);
 
         //Add all fixed components to the view
         this.getChildren().addAll(exitButton,menuHamburgerButton,centerStage,previewWindow,homeButton);
