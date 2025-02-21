@@ -46,7 +46,7 @@ public class IconObject extends Pane {
 
         imageRectangle.setArcHeight(35);
         imageRectangle.setArcWidth(35);
-
+        System.out.println(title);
         mainImageView.setImage(new Image(title + ".png")); //All images are going to need the same properties size wise
         mainImageView.setClip(imageRectangle);
 

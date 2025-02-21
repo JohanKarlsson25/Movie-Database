@@ -40,13 +40,13 @@ public class MainMenuView extends View {
     }
 
     void hoverIconObject(IconObject objectToBeHovered, boolean isMovie){
-        if (isMovie) centerStage.relocateMovieIconObject(objectToBeHovered, 45);
-        else centerStage.relocateTv_SeriesIconObject(objectToBeHovered,355);
+        if (isMovie) centerStage.relocateMovieIconObject(objectToBeHovered, 45,5);
+        else centerStage.relocateTv_SeriesIconObject(objectToBeHovered,355,5);
     }
 
     void unHoverIconObject(IconObject currentHoveredObject, boolean isMovie){
-        if (isMovie) centerStage.relocateMovieIconObject(currentHoveredObject,50);
-        else centerStage.relocateTv_SeriesIconObject(currentHoveredObject,360);
+        if (isMovie) centerStage.relocateMovieIconObject(currentHoveredObject,50,10);
+        else centerStage.relocateTv_SeriesIconObject(currentHoveredObject,360,10);
     }
 
     void addEventHandlers(Controller controller){

@@ -51,6 +51,7 @@ public class Model {
         allMedia.get(9).setWatchedStatus(true);
         allMedia.get(9).setHallOfFameStatus(true);
         allMedia.get(9).setWatchListStatus(false);*/
+        //allMedia.add(new Movie("Gladiator","sg",9.2,2000,2,35));
     }
 
     public void readFromFile() throws Exception {

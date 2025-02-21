@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.List;
@@ -36,17 +37,21 @@ public class CenterStage extends Pane {
         initialPosition();
     }
 
-    void relocateMovieIconObject(IconObject iconObject, int yCoordinate){
-        iconObject.relocate(movieIconObjectList.indexOf(iconObject)*210 + 10, yCoordinate);
+    void relocateMovieIconObject(IconObject iconObject, int yCoordinate, int xCoordinateOffset){
+        iconObject.relocate(movieIconObjectList.indexOf(iconObject)*210 + xCoordinateOffset, yCoordinate);
     }
 
-    void relocateTv_SeriesIconObject(IconObject iconObject, int yCoordinate){
-        iconObject.relocate(tv_SeriesIconObjectList.indexOf(iconObject)*210 + 10, yCoordinate);
+    void relocateTv_SeriesIconObject(IconObject iconObject, int yCoordinate, int xCoordinateOffset){
+        iconObject.relocate(tv_SeriesIconObjectList.indexOf(iconObject)*210 + xCoordinateOffset, yCoordinate);
     }
 
     void setMostRecentWatchImage(String mostRecentWatchImageTitle){
         if (mostRecentWatchImage == null) this.mostRecentWatchImage = new Image(mostRecentWatchImageTitle + ".png"); //What happens when I change a movie to watchedStatus??
+        Rectangle imageRectangle = new Rectangle(0,0,600,600);
         mostRecentWatchImageView.setImage(mostRecentWatchImage); //This Image needs to be cropped. I have different Images but all quadratic
+        mostRecentWatchImageView.setClip(imageRectangle);
+        mostRecentWatchImageView.setFitWidth(500);
+        mostRecentWatchImageView.setFitHeight(500);
     }
 
     private void initialPosition(){

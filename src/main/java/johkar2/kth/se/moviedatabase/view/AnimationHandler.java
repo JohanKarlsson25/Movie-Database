@@ -18,7 +18,7 @@ public class AnimationHandler {
         transition.setCycleCount(transitionCycleCount);
         transition.setNode(child);
         transition.play();
-        //TODO // I think i want a function for making the startScreen background "roll" infinite. Probably having to pictures and a imageview that switches between.
+        //TODO // I think i want a function for making the startScreen background "roll" infinite. Probably having two pictures and a imageview that switches between.
         //TODO // Also ugly function FIX
     }
 
